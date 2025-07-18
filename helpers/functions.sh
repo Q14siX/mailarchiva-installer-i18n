@@ -9,6 +9,12 @@ get_system_language() {
   [[ "$lang" == "de" ]] && LANGUAGE="de" || LANGUAGE="en"
 }
 
+add_trailing_slash() {
+  case "$1" in
+    */) echo "$1" ;;
+    *)  echo "$1/" ;;
+}
+
 source_remote() {
   source <(wget -qO- "${GITHUB_RAW}$1")
 }
