@@ -23,13 +23,18 @@ source_local() {
   source $1
 }
 
-get_version() {
+get_github_info() {
+  local field="$1"
+  local json value
+  
   json=$(wget -qO- "$GITHUB_API")
-  GITHUB_VERSION=$(echo "$json" | grep -Po '"tag_name": "\K.*?(?=")')
+  value=$(echo "$json" | grep -Po "\"$field\":\s*\"\K.*?(?=\")")
+
+  echo "$value"
 }
 
 source_remote "lang/${LANGUAGE}.lang"
-get_version
 
 echo "Sprache: $LANGUAGE"
-echo "Version: $VERSION"
+echo "Version: $(get_github_info tag_name)"
+echo "Name: $(get_github_info name)"
