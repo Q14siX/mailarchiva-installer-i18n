@@ -6,6 +6,7 @@ REPO="mailarchiva-installer-i18n"
 GITHUB_RAW="https://raw.githubusercontent.com/$USER/$REPO/main/"
 GITHUB_API="https://api.github.com/repos/$USER/$REPO/releases/latest"
 MAILARCHIVA_RSS_URL="https://bs.stimulussoft.com/rss/product/maonprem"
+VERSION="v20250718_1049"
 
 get_mailarchiva_download_info() {
 	FEED=$(wget -q -O - "$MAILARCHIVA_RSS_URL")
@@ -64,7 +65,15 @@ get_github_info() {
   json=$(wget -qO- "$GITHUB_API")
   value=$(echo "$json" | grep -Po "\"$field\":\s*\"\K.*?(?=\")")
 
-  echo "$value"
+  if [[ -n "$value" ]]; then
+    echo "$value"
+  else
+    if [[ "$field" == "tag_name" ]]; then
+      echo "$VERSION"
+    else
+      echo ""
+    fi
+  fi
 }
 
 get_system_language
