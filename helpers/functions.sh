@@ -74,11 +74,11 @@ get_github_info() {
 get_system_language
 source_remote "lang/${LANGUAGE}.lang"
 
-echo "$WELCOME"
-echo "Sprache: $LANGUAGE"
-echo "Version: $(get_github_info tag_name)"
-echo "Name: $(get_github_info name)"
+echo "$MSG_WELCOME"
+echo "$MSG_LANGUAGE $LANGUAGE"
+echo "$MSG_VERSION $(get_github_info tag_name)"
+echo "$MSG_NAME $(get_github_info name)"
 
 get_mailarchiva_download_info
-echo "Gefundene Version: $MAILARCHIVA_VERSION"
-echo "Download-URL: $MAILARCHIVA_DOWNLOAD_URL"
+echo "$MSG_MAILARCHIVA_VERSION $MAILARCHIVA_VERSION"
+echo "$MSG_MAILARCHIVA_DOWNLOAD_URL $MAILARCHIVA_DOWNLOAD_URL"
