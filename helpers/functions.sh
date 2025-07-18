@@ -32,3 +32,10 @@ get_github_info() {
 
   echo "$value"
 }
+
+get_system_language
+source_remote "lang/${LANGUAGE}.lang"
+
+echo "Sprache: $LANGUAGE"
+echo "Version: $(get_github_info tag_name)"
+echo "Name: $(get_github_info name)"
