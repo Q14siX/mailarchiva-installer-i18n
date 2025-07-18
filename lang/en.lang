@@ -1,1 +1,6 @@
-WELCOME="Welcome"
+MSG_WELCOME="Welcome"
+MSG_LANGUAGE="Language:"
+MSG_VERSION="Version:"
+MSG_NAME="Name:"
+MSG_MAILARCHIVA_VERSION="Current MailArchiva version:"
+MSG_MAILARCHIVA_DOWNLOAD_URL="MailArchiva Download URL:"
