@@ -1,4 +1,7 @@
-GITHUB="https://raw.githubusercontent.com/Q14siX/mailarchiva-installer-i18n/main/"
+USER="Q14siX"
+REPO="mailarchiva-installer-i18n"
+GITHUB_RAW="https://raw.githubusercontent.com/$USER/$REPO/main/"
+GITHUB_API="https://api.github.com/repos/$USER/$REPO/releases/latest"
 
 get_system_language() {
   local lang="${LC_ALL:-${LC_MESSAGES:-$LANG}}"
@@ -13,13 +16,20 @@ add_trailing_slash() {
 }
 
 source_remote() {
-  source <(wget -qO- "${GITHUB}$1")
+  source <(wget -qO- "${GITHUB_RAW}$1")
 }
 
 source_local() {
   source $1
 }
 
-source_remote "lang/${LANGUAGE}.lang"
+get_version() {
+  json=$(wget -qO- "$GITHUB_API")
+  GITHUB_VERSION=$(echo "$json" | grep -Po '"tag_name": "\K.*?(?=")')
+}
 
-echo "Sprache $LANGUAGE"
+source_remote "lang/${LANGUAGE}.lang"
+get_version
+
+echo "Sprache: $LANGUAGE"
+echo "Version: $VERSION"
