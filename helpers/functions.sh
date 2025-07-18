@@ -7,6 +7,7 @@ GITHUB_RAW="https://raw.githubusercontent.com/$USER/$REPO/main/"
 GITHUB_API="https://api.github.com/repos/$USER/$REPO/releases/latest"
 MAILARCHIVA_RSS_URL="https://bs.stimulussoft.com/rss/product/maonprem"
 VERSION="v20250718_1049"
+NAME="🇩🇪 MailArchiva Installer mit i18n - Version 20250718_1049 / 🇬🇧 MailArchiva Installer with i18n - Version 20250718_1049"
 
 get_mailarchiva_download_info() {
 	FEED=$(wget -q -O - "$MAILARCHIVA_RSS_URL")
@@ -71,7 +72,7 @@ get_github_info() {
 		if [[ "$field" == "tag_name" ]]; then
 			echo "$VERSION"
 		elif [[ "$field" == "name" ]]; then
-			echo "🇩🇪 MailArchiva Installer mit i18n - Version 20250718_1049 / 🇬🇧 MailArchiva Installer with i18n - Version 20250718_1049"
+			echo "$NAME"
    		else
      			echo ""
 		fi
