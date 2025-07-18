@@ -80,6 +80,16 @@ get_github_info() {
 	fi
 }
 
+input() {
+	stty sane
+ 	read -p "$1" INPUT_VALUE
+  	echo "$INPUT_VALUE"
+ 	stty -echo -icanon time 0 min 0
+}
+
+stty -echo -icanon time 0 min 0
+trap 'stty sane' EXIT
+
 get_system_language
 source_remote "lang/${LANGUAGE}.lang"
 
@@ -90,3 +100,6 @@ echo "$MSG_NAME $(get_github_info name)"
 get_mailarchiva_download_info
 echo "$MSG_MAILARCHIVA_VERSION $MAILARCHIVA_VERSION"
 echo "$MSG_MAILARCHIVA_DOWNLOAD_URL $MAILARCHIVA_DOWNLOAD_URL"
+
+antwort=$(input "Bitte Ihren Namen eingeben: ")
+echo "Der Benutzer heißt: $antwort"
