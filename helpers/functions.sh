@@ -38,42 +38,42 @@ get_mailarchiva_download_info() {
 }
 
 get_system_language() {
-  local lang="${LC_ALL:-${LC_MESSAGES:-$LANG}}"
-  lang="${lang%%[_\.]*}"
-  [[ "$lang" == "de" ]] && LANGUAGE="de" || LANGUAGE="en"
+	local lang="${LC_ALL:-${LC_MESSAGES:-$LANG}}"
+	lang="${lang%%[_\.]*}"
+ 	[[ "$lang" == "de" ]] && LANGUAGE="de" || LANGUAGE="en"
 }
 
 add_trailing_slash() {
-  case "$1" in
-    */) echo "$1" ;;
-    *)  echo "$1/" ;;
-  esac
+	case "$1" in
+		*/) echo "$1" ;;
+		*)  echo "$1/" ;;
+	esac
 }
 
 source_remote() {
-  source <(wget -qO- "${GITHUB_RAW}$1")
+	source <(wget -qO- "${GITHUB_RAW}$1")
 }
 
 source_local() {
-  source $1
+	source $1
 }
 
 get_github_info() {
-  local field="$1"
-  local json value
+	local field="$1"
+	local json value
   
-  json=$(wget -qO- "$GITHUB_API")
-  value=$(echo "$json" | grep -Po "\"$field\":\s*\"\K.*?(?=\")")
+	json=$(wget -qO- "$GITHUB_API")
+	value=$(echo "$json" | grep -Po "\"$field\":\s*\"\K.*?(?=\")")
 
-  if [[ -n "$value" ]]; then
-    echo "$value"
-  else
-    if [[ "$field" == "tag_name" ]]; then
-      echo "$VERSION"
-    else
-      echo ""
-    fi
-  fi
+	if [[ -n "$value" ]]; then
+		echo "$value"
+	else
+		if [[ "$field" == "tag_name" ]]; then
+			echo "$VERSION"
+		else
+			echo ""
+		fi
+	fi
 }
 
 get_system_language
