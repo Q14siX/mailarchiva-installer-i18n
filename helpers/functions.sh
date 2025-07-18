@@ -1,4 +1,4 @@
-#!/bin/bash
+clear
 
 USER="Q14siX"
 REPO="mailarchiva-installer-i18n"
