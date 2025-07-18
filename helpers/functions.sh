@@ -1,13 +1,14 @@
 #!/bin/bash
 clear
 
+INSTALLER_NAME="🇩🇪 MailArchiva Installer mit i18n - Version 20250718_1049 / 🇬🇧 MailArchiva Installer with i18n - Version 20250718_1049"
+INSTALLER_VERSION="v20250718_1049"
+
 USER="Q14siX"
 REPO="mailarchiva-installer-i18n"
 GITHUB_RAW="https://raw.githubusercontent.com/$USER/$REPO/main/"
 GITHUB_API="https://api.github.com/repos/$USER/$REPO/releases/latest"
 MAILARCHIVA_RSS_URL="https://bs.stimulussoft.com/rss/product/maonprem"
-VERSION="v20250718_1049"
-NAME="🇩🇪 MailArchiva Installer mit i18n - Version 20250718_1049 / 🇬🇧 MailArchiva Installer with i18n - Version 20250718_1049"
 
 get_mailarchiva_download_info() {
 	FEED=$(wget -q -O - "$MAILARCHIVA_RSS_URL")
@@ -70,9 +71,9 @@ get_github_info() {
 		echo "$value"
 	else
 		if [[ "$field" == "tag_name" ]]; then
-			echo "$VERSION"
+			echo "$INSTALLER_VERSION"
 		elif [[ "$field" == "name" ]]; then
-			echo "$NAME"
+			echo "$INSTALLER_NAME"
    		else
      			echo ""
 		fi
