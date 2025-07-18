@@ -33,6 +33,7 @@ get_github_info() {
   echo "$value"
 }
 
+get_system_language
 source_remote "lang/${LANGUAGE}.lang"
 
 echo "Sprache: $LANGUAGE"
