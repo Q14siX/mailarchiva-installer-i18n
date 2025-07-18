@@ -15,6 +15,7 @@ add_trailing_slash() {
   case "$1" in
     */) echo "$1" ;;
     *)  echo "$1/" ;;
+  esac
 }
 
 source_remote() {
