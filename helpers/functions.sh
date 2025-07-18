@@ -1,3 +1,4 @@
+#!/bin/bash
 clear
 
 USER="Q14siX"
