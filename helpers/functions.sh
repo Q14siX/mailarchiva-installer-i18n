@@ -1,8 +1,8 @@
 #!/bin/bash
 clear
 
-INSTALLER_NAME="🇩🇪 MailArchiva Installer mit i18n - Version 20250718_1049 / 🇬🇧 MailArchiva Installer with i18n - Version 20250718_1049"
 INSTALLER_VERSION="v20250718_1049"
+INSTALLER_NAME="🇩🇪 MailArchiva Installer mit i18n - Version $INSTALLER_VERSION / 🇬🇧 MailArchiva Installer with i18n - Version $INSTALLER_VERSION"
 
 USER="Q14siX"
 REPO="mailarchiva-installer-i18n"
