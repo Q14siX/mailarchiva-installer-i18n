@@ -8,7 +8,6 @@ GITHUB_API="https://api.github.com/repos/$USER/$REPO/releases/latest"
 MAILARCHIVA_RSS_URL="https://bs.stimulussoft.com/rss/product/maonprem"
 
 get_mailarchiva_download_info() {
-	# Hole RSS-Feed
 	FEED=$(wget -q -O - "$MAILARCHIVA_RSS_URL")
 	LATEST_LINK=$(echo "$FEED" | awk '/<item>/,/<\/item>/{print}' | grep -oP '(?<=<link>)[^<]+' | head -n 1)
 
@@ -17,7 +16,6 @@ get_mailarchiva_download_info() {
 		exit 1
 	fi
 
-	# Hole JSON von der Detailseite
 	JSON=$(wget -q -O - "$LATEST_LINK")
 
 	if [ -z "$JSON" ]; then
@@ -25,14 +23,12 @@ get_mailarchiva_download_info() {
 		exit 1
 	fi
 
-	# Version auslesen
 	MAILARCHIVA_VERSION=$(echo "$JSON" | jq -r '.version')
 	if [ -z "$MAILARCHIVA_VERSION" ] || [ "$MAILARCHIVA_VERSION" == "null" ]; then
 		echo "Fehler: Version nicht gefunden."
 		exit 1
 	fi
 
-	# Download-URL für Linux auslesen
 	MAILARCHIVA_DOWNLOAD_URL=$(echo "$JSON" | jq -r '.distributions[] | select(.operatingSystem=="LINUX") | .downloadUrl')
 	if [ -z "$MAILARCHIVA_DOWNLOAD_URL" ] || [ "$MAILARCHIVA_DOWNLOAD_URL" == "null" ]; then
 		echo "Fehler: Keine Linux-Download-URL gefunden."
