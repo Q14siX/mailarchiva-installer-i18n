@@ -7,30 +7,37 @@ GITHUB_RAW="https://raw.githubusercontent.com/$USER/$REPO/main/"
 GITHUB_API="https://api.github.com/repos/$USER/$REPO/releases/latest"
 MAILARCHIVA_RSS_URL="https://bs.stimulussoft.com/rss/product/maonprem"
 
-get_mailarchiver_download_url() {
+get_mailarchiva_download_info() {
+	# Hole RSS-Feed
 	FEED=$(wget -q -O - "$MAILARCHIVA_RSS_URL")
 	LATEST_LINK=$(echo "$FEED" | awk '/<item>/,/<\/item>/{print}' | grep -oP '(?<=<link>)[^<]+' | head -n 1)
-	
+
 	if [ -z "$LATEST_LINK" ]; then
 		echo "Fehler: Link der neuesten Version nicht gefunden."
 		exit 1
 	fi
- 
+
+	# Hole JSON von der Detailseite
 	JSON=$(wget -q -O - "$LATEST_LINK")
-	
+
 	if [ -z "$JSON" ]; then
 		echo "Fehler: Keine Daten vom Link erhalten."
 		exit 1
 	fi
-	
-	DOWNLOAD_URL=$(echo "$JSON" | jq -r '.distributions[] | select(.operatingSystem=="LINUX") | .downloadUrl')
-		
-	if [ -z "$DOWNLOAD_URL" ]; then
+
+	# Version auslesen
+	MAILARCHIVA_VERSION=$(echo "$JSON" | jq -r '.version')
+	if [ -z "$MAILARCHIVA_VERSION" ] || [ "$MAILARCHIVA_VERSION" == "null" ]; then
+		echo "Fehler: Version nicht gefunden."
+		exit 1
+	fi
+
+	# Download-URL für Linux auslesen
+	MAILARCHIVA_DOWNLOAD_URL=$(echo "$JSON" | jq -r '.distributions[] | select(.operatingSystem=="LINUX") | .downloadUrl')
+	if [ -z "$MAILARCHIVA_DOWNLOAD_URL" ] || [ "$MAILARCHIVA_DOWNLOAD_URL" == "null" ]; then
 		echo "Fehler: Keine Linux-Download-URL gefunden."
 		exit 1
 	fi
-	
-	echo "$DOWNLOAD_URL"
 }
 
 get_system_language() {
@@ -70,4 +77,7 @@ source_remote "lang/${LANGUAGE}.lang"
 echo "Sprache: $LANGUAGE"
 echo "Version: $(get_github_info tag_name)"
 echo "Name: $(get_github_info name)"
-echo "MailAchiver: $(get_mailarchiver_download_url)"
+
+get_mailarchiva_download_info
+echo "Gefundene Version: $MAILARCHIVA_VERSION"
+echo "Download-URL: $MAILARCHIVA_DOWNLOAD_URL"
