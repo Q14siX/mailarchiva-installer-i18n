@@ -70,7 +70,7 @@ get_github_info() {
 	else
 		if [[ "$field" == "tag_name" ]]; then
 			echo "$VERSION"
-		elseif [[ "$field" == "name" ]]; then
+		elif [[ "$field" == "name" ]]; then
 			echo "🇩🇪 MailArchiva Installer mit i18n - Version 20250718_1049 / 🇬🇧 MailArchiva Installer with i18n - Version 20250718_1049"
    		else
      			echo ""
