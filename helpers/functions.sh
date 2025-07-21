@@ -87,7 +87,7 @@ input() {
  	stty -echo -icanon time 0 min 0
 }
 
-check_admin() {
+check_root() {
 	if [ "$EUID" -ne 0 ]; then
 	  echo "$MSG_ADMIN_ERROR" >&2
 	  exit 1
@@ -99,6 +99,8 @@ trap 'stty sane' EXIT
 
 get_system_language
 source_remote "lang/${LANGUAGE}.lang"
+
+check_root
 
 echo "$MSG_WELCOME - $MSG_VERSION $(get_github_info tag_name)"
 echo "$MSG_LANGUAGE $LANGUAGE"
