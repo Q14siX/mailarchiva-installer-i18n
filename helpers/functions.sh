@@ -87,6 +87,13 @@ input() {
  	stty -echo -icanon time 0 min 0
 }
 
+check_admin() {
+	if [ "$EUID" -ne 0 ]; then
+	  echo "$MSG_ADMIN_ERROR" >&2
+	  exit 1
+	fi
+}
+
 stty -echo -icanon time 0 min 0
 trap 'stty sane' EXIT
 
