@@ -1,4 +1,5 @@
 MSG_WELCOME="Welcome to the MailArchiva Installer"
+MSG_ADMIN_ERROR="This script must be run as root!"
 MSG_LANGUAGE="Language:"
 MSG_VERSION="Version:"
 MSG_NAME="Name:"
